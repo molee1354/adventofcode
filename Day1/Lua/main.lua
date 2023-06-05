@@ -17,7 +17,7 @@ function Main()
             table.insert(cal_arr, cal_sum)
             cal_sum = 0
         else
-            cal_sum += tonumber(v)
+            cal_sum = cal_sum + tonumber(v)
         end
     end
 end
