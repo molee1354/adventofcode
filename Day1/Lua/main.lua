@@ -1,14 +1,8 @@
 -- getting the lines from a file
-local function get_file( filename )
-    local lines = {} -- empty table
-    for line in io.lines( filename ) do
-        lines[#lines+1] = line
-    end
-    return lines
-end
+local helper = require("helper")
 
 function Main()
-    local lines = get_file("input.txt")
+    local lines = helper.get_file("input.txt")
 
     local cal_sum = 0
     local cal_arr= {}
@@ -20,6 +14,7 @@ function Main()
             cal_sum = cal_sum + tonumber(v)
         end
     end
+    print(helper.max_cal( cal_arr ))
 end
 
 Main()
