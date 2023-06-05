@@ -1,10 +1,9 @@
--- getting the lines from a file
 local cal = {
     sum = 0,
     max = 0,
     array = {},
     get_file = function( filename )
-        local lines = {} -- empty table
+        local lines = {}
         for line in io.lines( filename ) do
             lines[#lines+1] = line
         end
