@@ -1,20 +1,47 @@
 -- getting the lines from a file
-local helper = require("helper")
+local cal = {
+    sum = 0,
+    max = 0,
+    array = {},
+    get_file = function( filename )
+        local lines = {} -- empty table
+        for line in io.lines( filename ) do
+            lines[#lines+1] = line
+        end
+        return lines
+    end,
+
+    top_three_sum = function ( cal_array )
+        local array = {}
+        for i, v in ipairs( cal_array ) do
+            array[#array+1] = v
+        end
+        table.sort( array ) -- sort from least to greatest
+        return array[#array] + array[#array-1] + array[#array-2]
+    end
+}
 
 function Main()
-    local lines = helper.get_file("input.txt")
+    local lines = cal.get_file( "input.txt" )
 
-    local cal_sum = 0
-    local cal_arr= {}
+    -- Part 1
     for i,v in ipairs(lines) do
         if v == '' then
-            table.insert(cal_arr, cal_sum)
-            cal_sum = 0
+            if cal.sum > cal.max then
+                cal.max = cal.sum
+            end
+            table.insert(cal.array, cal.sum)
+            cal.sum = 0
         else
-            cal_sum = cal_sum + tonumber(v)
+            cal.sum = cal.sum + tonumber(v)
         end
     end
-    print(helper.max_cal( cal_arr ))
+
+    -- Part 2
+    local top_three = cal.top_three_sum( cal.array )
+
+    print("[Part 1] Maximum Calories : "..cal.max.." cal")
+    print("[Part 2] Top 3 Calories : "..top_three.." cal")
 end
 
 Main()
