@@ -3,7 +3,10 @@ local part2 = require("game")
 part2.to_score = {
     ['X'] = 0,
     ['Y'] = 3,
-    ['Z'] = 6
+    ['Z'] = 6,
+    ['A'] = 1,
+    ['B'] = 2,
+    ['C'] = 3
 }
 
 function part2:determine_win( op, me )
@@ -16,24 +19,26 @@ function part2:determine_win( op, me )
     end
 end
 
-local my_move = function( self, me )
-    local op_moves = {'A', 'B', 'C'}
-    if me == 'X' then --you need to lose
-        for i, op_move in ipairs(op_moves) do
-            if self.determine_win(op_move, me) == 0 then
-                return self.to_int[op_moves]
+local my_move = function( self, op, res )
+-- local function my_move(self, me)
+-- function part2:my_move( me )
+    local moves = {'A', 'B', 'C'}
+    if res == 'X' then --you lose
+        for i, me in ipairs(moves) do
+            if self:determine_win(op, me) == 0 then
+                return self.to_score[me]
             end
         end
-    elseif me == 'Y' then --you need to lose
-        for i, op_move in ipairs(op_moves) do
-            if self.determine_win(op_move, me) == 3 then
-                return self.to_int[op_moves]
+    elseif res == 'Y' then --you draw
+        for i, me in ipairs(moves) do
+            if self:determine_win(op, me) == 3 then
+                return self.to_score[me]
             end
         end
-    elseif me == 'Z' then 
-        for i, op_move in ipairs(op_moves) do
-            if self.determine_win(op_move, me) == 6 then
-                return self.to_int[op_moves]
+    elseif res == 'Z' then --you win
+        for i, me in ipairs(moves) do
+            if self:determine_win(op, me) == 6 then
+                return self.to_score[me]
             end
         end
     else
@@ -42,12 +47,16 @@ local my_move = function( self, me )
 
 end
 
+local add_score = function( self, op, me )
+    return part2.to_score[me] + my_move(self, op, me)
+end
+
 function part2:get_score()
     local score = 0
-    for i, round in ipairs(self.strategy) do
+    for i, round in ipairs(part2.strategy) do
         local move = part2:split_string(round)
         -- " attempt to perform arithmetic on a nil value "
-        score = score + (part2.to_score[move[2]] + my_move(part2, move[2]))
+        score = score + add_score(part2, move[1], move[2])
 
     end
     return score

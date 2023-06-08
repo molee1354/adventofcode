@@ -34,13 +34,12 @@ local game = {
     end,
 
     determine_win = function ()
-       error("Method `determine_win()` must be implemeted in child class",2) 
+       error("Method `determine_win()` must be implemeted in child class",2)
     end,
 
     get_score = function ()
-       error("Method `get_score()` must be implemeted in child class",2) 
+       error("Method `get_score()` must be implemeted in child class",2)
     end
 }
-
 
 return game
