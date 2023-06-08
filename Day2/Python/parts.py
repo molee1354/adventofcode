@@ -71,21 +71,21 @@ class Part2(Parts):
 
         return total_score
 
-
     def determine_score(self, op: str, me: str) -> int:
         return self.win_guide[me] + self.determine_self(op, me)
 
     def determine_self(self, op: str, res: str) -> int:
-        if res == 'X': # need to win
-            for me in ['A', 'B', 'C']:
+        moves = ['A', 'B', 'C']
+        if res == 'X': # need to lose
+            for me in moves:
                 if self.determine_win(op, me) == 0:
                     return self.score_guide[me]
         elif res == 'Y': # need to draw
-            for me in ['A', 'B', 'C']:
+            for me in moves:
                 if self.determine_win(op, me) == 3:
                     return self.score_guide[me]
-        elif res == 'Z': # need to lose
-            for me in ['A', 'B', 'C']:
+        elif res == 'Z': # need to win
+            for me in moves:
                 if self.determine_win(op, me) == 6:
                     return self.score_guide[me]
         else:
