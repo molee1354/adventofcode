@@ -1,7 +1,9 @@
 module Rucksack
 
+    # hashmap to store the priority of each letter
     priority = Dict{Char, Int}()
-    for (value, letter) in enumerate(vcat( collect('a':'z'), collect('A':'Z')))
+    alphabet = vcat( collect('a':'z'), collect('A':'Z'))
+    for (value, letter) in enumerate(alphabet)
         priority[letter] = value
     end
 
